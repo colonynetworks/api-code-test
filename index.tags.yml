@@ -3,7 +3,6 @@
   default:
     ? [
         env: {},
-        spec: {},
         name: api-code-test,
         namespace: codetest-namespace,
         port: 8888,
