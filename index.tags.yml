@@ -1,0 +1,46 @@
+- !require colonynetworks/api
+- !define
+  default:
+    ? [
+        env: {},
+        spec: {},
+        name: api-code-test,
+        namespace: codetest-namespace,
+        port: 8888,
+        replicas: 1,
+        base-url: "api.colonynetworks.com",
+        version: 0.0.1,
+      ]
+    : !api
+      name: !args name
+      version: !args version
+      namespace: !args namespace
+      replicas: !args replicas
+      context: $(ypx colonynetworks/api-code-test pwd)
+      spec:
+        openapi: 3.0.0
+        info:
+          version: !args version
+          title: Code Test API
+          description: >
+            Code Test API
+        servers:
+          - url: !join ["https://", !args base-url, "/v3/path/to/api"]
+        paths:
+          /endpoint:
+            get:
+              tags:
+                - tag
+              summary: summary
+              description: description
+              operationId: src.api.get
+              responses:
+                "200":
+                  description: >
+                    Successful operation
+                  content:
+                    application/json:
+                      schema:
+                        type: object
+      env:
+        BASE_URL: !args base-url
